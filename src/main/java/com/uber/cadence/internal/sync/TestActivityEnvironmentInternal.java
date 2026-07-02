@@ -583,6 +583,52 @@ public final class TestActivityEnvironmentInternal implements TestActivityEnviro
     }
 
     @Override
+    public CreateScheduleResponse CreateSchedule(CreateScheduleRequest request)
+        throws CadenceError {
+      return impl.CreateSchedule(request);
+    }
+
+    @Override
+    public DescribeScheduleResponse DescribeSchedule(DescribeScheduleRequest request)
+        throws CadenceError {
+      return impl.DescribeSchedule(request);
+    }
+
+    @Override
+    public UpdateScheduleResponse UpdateSchedule(UpdateScheduleRequest request)
+        throws CadenceError {
+      return impl.UpdateSchedule(request);
+    }
+
+    @Override
+    public DeleteScheduleResponse DeleteSchedule(DeleteScheduleRequest request)
+        throws CadenceError {
+      return impl.DeleteSchedule(request);
+    }
+
+    @Override
+    public PauseScheduleResponse PauseSchedule(PauseScheduleRequest request) throws CadenceError {
+      return impl.PauseSchedule(request);
+    }
+
+    @Override
+    public UnpauseScheduleResponse UnpauseSchedule(UnpauseScheduleRequest request)
+        throws CadenceError {
+      return impl.UnpauseSchedule(request);
+    }
+
+    @Override
+    public BackfillScheduleResponse BackfillSchedule(BackfillScheduleRequest request)
+        throws CadenceError {
+      return impl.BackfillSchedule(request);
+    }
+
+    @Override
+    public ListSchedulesResponse ListSchedules(ListSchedulesRequest request) throws CadenceError {
+      return impl.ListSchedules(request);
+    }
+
+    @Override
     public void RegisterDomain(
         RegisterDomainRequest registerRequest, AsyncMethodCallback resultHandler)
         throws CadenceError {

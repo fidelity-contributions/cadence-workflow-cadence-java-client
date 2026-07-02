@@ -17,15 +17,23 @@
 
 package com.uber.cadence.internal.testservice;
 
+import com.uber.cadence.BackfillScheduleRequest;
+import com.uber.cadence.BackfillScheduleResponse;
 import com.uber.cadence.BadRequestError;
 import com.uber.cadence.CadenceError;
 import com.uber.cadence.ClientVersionNotSupportedError;
 import com.uber.cadence.ClusterInfo;
 import com.uber.cadence.CountWorkflowExecutionsRequest;
 import com.uber.cadence.CountWorkflowExecutionsResponse;
+import com.uber.cadence.CreateScheduleRequest;
+import com.uber.cadence.CreateScheduleResponse;
+import com.uber.cadence.DeleteScheduleRequest;
+import com.uber.cadence.DeleteScheduleResponse;
 import com.uber.cadence.DeprecateDomainRequest;
 import com.uber.cadence.DescribeDomainRequest;
 import com.uber.cadence.DescribeDomainResponse;
+import com.uber.cadence.DescribeScheduleRequest;
+import com.uber.cadence.DescribeScheduleResponse;
 import com.uber.cadence.DescribeTaskListRequest;
 import com.uber.cadence.DescribeTaskListResponse;
 import com.uber.cadence.DescribeWorkflowExecutionRequest;
@@ -50,10 +58,14 @@ import com.uber.cadence.ListDomainsRequest;
 import com.uber.cadence.ListDomainsResponse;
 import com.uber.cadence.ListOpenWorkflowExecutionsRequest;
 import com.uber.cadence.ListOpenWorkflowExecutionsResponse;
+import com.uber.cadence.ListSchedulesRequest;
+import com.uber.cadence.ListSchedulesResponse;
 import com.uber.cadence.ListTaskListPartitionsRequest;
 import com.uber.cadence.ListTaskListPartitionsResponse;
 import com.uber.cadence.ListWorkflowExecutionsRequest;
 import com.uber.cadence.ListWorkflowExecutionsResponse;
+import com.uber.cadence.PauseScheduleRequest;
+import com.uber.cadence.PauseScheduleResponse;
 import com.uber.cadence.PollForActivityTaskRequest;
 import com.uber.cadence.PollForActivityTaskResponse;
 import com.uber.cadence.PollForDecisionTaskRequest;
@@ -96,8 +108,12 @@ import com.uber.cadence.StartWorkflowExecutionAsyncResponse;
 import com.uber.cadence.StartWorkflowExecutionRequest;
 import com.uber.cadence.StartWorkflowExecutionResponse;
 import com.uber.cadence.TerminateWorkflowExecutionRequest;
+import com.uber.cadence.UnpauseScheduleRequest;
+import com.uber.cadence.UnpauseScheduleResponse;
 import com.uber.cadence.UpdateDomainRequest;
 import com.uber.cadence.UpdateDomainResponse;
+import com.uber.cadence.UpdateScheduleRequest;
+import com.uber.cadence.UpdateScheduleResponse;
 import com.uber.cadence.WorkflowExecution;
 import com.uber.cadence.WorkflowExecutionAlreadyCompletedError;
 import com.uber.cadence.WorkflowExecutionAlreadyStartedError;
@@ -1249,6 +1265,49 @@ public final class TestWorkflowService implements IWorkflowService {
   @Override
   public void RefreshWorkflowTasks(
       RefreshWorkflowTasksRequest request, AsyncMethodCallback resultHandler) throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public CreateScheduleResponse CreateSchedule(CreateScheduleRequest request) throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public DescribeScheduleResponse DescribeSchedule(DescribeScheduleRequest request)
+      throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public UpdateScheduleResponse UpdateSchedule(UpdateScheduleRequest request) throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public DeleteScheduleResponse DeleteSchedule(DeleteScheduleRequest request) throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public PauseScheduleResponse PauseSchedule(PauseScheduleRequest request) throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public UnpauseScheduleResponse UnpauseSchedule(UnpauseScheduleRequest request)
+      throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public BackfillScheduleResponse BackfillSchedule(BackfillScheduleRequest request)
+      throws CadenceError {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
+  public ListSchedulesResponse ListSchedules(ListSchedulesRequest request) throws CadenceError {
     throw new UnsupportedOperationException("not implemented");
   }
 
