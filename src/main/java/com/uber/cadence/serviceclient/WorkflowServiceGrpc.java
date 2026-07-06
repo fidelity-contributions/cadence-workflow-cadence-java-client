@@ -19,6 +19,7 @@ package com.uber.cadence.serviceclient;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.uber.cadence.*;
 import com.uber.cadence.internal.compatibility.proto.mappers.*;
@@ -801,46 +802,110 @@ public class WorkflowServiceGrpc implements IWorkflowService {
   }
 
   @Override
-  public CreateScheduleResponse CreateSchedule(CreateScheduleRequest request) throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<CreateScheduleResponse> CreateSchedule(CreateScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .createSchedule(RequestMapper.createScheduleRequest(request)),
+          ResponseMapper::createScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public DescribeScheduleResponse DescribeSchedule(DescribeScheduleRequest request)
-      throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<DescribeScheduleResponse> DescribeSchedule(
+      DescribeScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .describeSchedule(RequestMapper.describeScheduleRequest(request)),
+          ResponseMapper::describeScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public UpdateScheduleResponse UpdateSchedule(UpdateScheduleRequest request) throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<UpdateScheduleResponse> UpdateSchedule(UpdateScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .updateSchedule(RequestMapper.updateScheduleRequest(request)),
+          ResponseMapper::updateScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public DeleteScheduleResponse DeleteSchedule(DeleteScheduleRequest request) throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<DeleteScheduleResponse> DeleteSchedule(DeleteScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .deleteSchedule(RequestMapper.deleteScheduleRequest(request)),
+          ResponseMapper::deleteScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public PauseScheduleResponse PauseSchedule(PauseScheduleRequest request) throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<PauseScheduleResponse> PauseSchedule(PauseScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .pauseSchedule(RequestMapper.pauseScheduleRequest(request)),
+          ResponseMapper::pauseScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public UnpauseScheduleResponse UnpauseSchedule(UnpauseScheduleRequest request)
-      throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<UnpauseScheduleResponse> UnpauseSchedule(
+      UnpauseScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .unpauseSchedule(RequestMapper.unpauseScheduleRequest(request)),
+          ResponseMapper::unpauseScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public BackfillScheduleResponse BackfillSchedule(BackfillScheduleRequest request)
-      throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<BackfillScheduleResponse> BackfillSchedule(
+      BackfillScheduleRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .backfillSchedule(RequestMapper.backfillScheduleRequest(request)),
+          ResponseMapper::backfillScheduleResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
-  public ListSchedulesResponse ListSchedules(ListSchedulesRequest request) throws CadenceError {
-    throw new UnsupportedOperationException("not implemented");
+  public CompletableFuture<ListSchedulesResponse> ListSchedules(ListSchedulesRequest request) {
+    try {
+      return toCompletableFuture(
+          grpcServiceStubs
+              .scheduleFutureStub()
+              .listSchedules(RequestMapper.listSchedulesRequest(request)),
+          ResponseMapper::listSchedulesResponse);
+    } catch (Exception e) {
+      return failedFuture(e);
+    }
   }
 
   @Override
@@ -1412,6 +1477,32 @@ public class WorkflowServiceGrpc implements IWorkflowService {
     } else {
       return new CadenceError(t);
     }
+  }
+
+  private <P, T> CompletableFuture<T> toCompletableFuture(
+      ListenableFuture<P> listenableFuture, Function<P, T> mapper) {
+    CompletableFuture<T> future = new CompletableFuture<>();
+    Futures.addCallback(
+        listenableFuture,
+        new FutureCallback<P>() {
+          @Override
+          public void onSuccess(P result) {
+            future.complete(mapper.apply(result));
+          }
+
+          @Override
+          public void onFailure(Throwable t) {
+            future.completeExceptionally(toServiceClientException(t));
+          }
+        },
+        executor);
+    return future;
+  }
+
+  private <T> CompletableFuture<T> failedFuture(Exception e) {
+    CompletableFuture<T> future = new CompletableFuture<>();
+    future.completeExceptionally(toServiceClientException(e));
+    return future;
   }
 
   private <T, R> FutureCallback<R> toFutureCallback(
